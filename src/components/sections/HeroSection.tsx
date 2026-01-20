@@ -25,8 +25,8 @@ export function HeroSection({
   const { personal } = portfolioData;
 
   const stats = [
-    { label: "Years of work experience", value: "7" },
-    { label: "Completed projects", value: "50+" },
+    { label: "Years of work experience", value: "2" },
+    { label: "Completed projects", value: "1+" },
     { label: "Satisfied customers", value: "20+" },
   ];
 
