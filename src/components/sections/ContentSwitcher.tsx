@@ -11,7 +11,7 @@ export function ContentSwitcher() {
   const [activeTab, setActiveTab] = useState<Tab>("portfolio");
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 pt-10">
       <div className="flex justify-center mb-16">
         <div className="flex p-1.5 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 w-full max-w-md">
           <button

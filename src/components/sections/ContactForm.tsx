@@ -2,120 +2,117 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Send, CheckCircle2, AlertCircle } from "lucide-react";
+import {
+  Send,
+  CheckCircle2,
+  AlertCircle,
+  Mail,
+  MapPin,
+  Github,
+  Linkedin,
+  Twitter,
+} from "lucide-react";
 
 export function ContactForm() {
-    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-    const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setStatus("loading");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
 
-        try {
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                body: JSON.stringify(formData),
-                headers: { "Content-Type": "application/json" },
-            });
+    // Simulate network request (Replace with your actual fetch)
+    setTimeout(() => {
+      setStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+    }, 1500);
 
-            if (res.ok) {
-                setStatus("success");
-                setFormData({ name: "", email: "", message: "" });
-            } else {
-                setStatus("error");
-            }
-        } catch (err) {
-            setStatus("error");
-        }
-    };
+    /* try {
+      const res = await fetch("/api/contact", { ... });
+      if (res.ok) setStatus("success");
+      else setStatus("error");
+    } catch (err) { setStatus("error"); }
+    */
+  };
 
-    return (
-        <section className="mt-32 max-w-2xl mx-auto px-6 mb-20">
-            <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Get in Touch</h2>
-                <p className="text-gray-600 dark:text-gray-400">Have a project in mind? Let's build something amazing together.</p>
+  return (
+    <section className="py-10 px-6 max-w-7xl mx-auto">
+      <div>
+        {/* --- LEFT COLUMN: Context & Direct Contact --- */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="space-y-8 lg:sticky lg:top-24"
+        >
+          <div>
+            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+              Let's work
+              <span className="text-primary"> together.</span>
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl">
+              I'm currently available for freelance work and open to full-time
+              opportunities. If you have a project that needs some creative
+              engineering, I'd love to hear about it.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-center gap-4 text-gray-700 dark:text-gray-300">
+              <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center text-primary shrink-0">
+                <Mail className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-gray-500 uppercase tracking-wide">
+                  Email me at
+                </p>
+                <a
+                  href="mailto:hello@victor.dev"
+                  className="text-lg font-bold hover:text-primary transition-colors"
+                >
+                  mdjakir.cse.ju@gmail.com
+                </a>
+              </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800/50 p-8 rounded-[32px] border border-gray-100 dark:border-gray-700 shadow-xl">
-                {status === "success" ? (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="flex flex-col items-center py-10 text-center"
-                    >
-                        <CheckCircle2 className="w-16 h-16 text-green-500 mb-4" />
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Message Sent!</h3>
-                        <p className="text-gray-600 dark:text-gray-400">Thank you for reaching out. I'll get back to you soon.</p>
-                        <button
-                            onClick={() => setStatus("idle")}
-                            className="mt-6 text-primary font-bold hover:underline"
-                        >
-                            Send another message
-                        </button>
-                    </motion.div>
-                ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest pl-1">Name</label>
-                            <input
-                                required
-                                type="text"
-                                placeholder="John Doe"
-                                className="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 rounded-2xl p-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white"
-                                value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            />
-                        </div>
-
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest pl-1">Email</label>
-                            <input
-                                required
-                                type="email"
-                                placeholder="john@example.com"
-                                className="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 rounded-2xl p-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white"
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            />
-                        </div>
-
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest pl-1">Message</label>
-                            <textarea
-                                required
-                                rows={4}
-                                placeholder="Tell me about your project..."
-                                className="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 rounded-2xl p-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white resize-none"
-                                value={formData.message}
-                                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                            />
-                        </div>
-
-                        {status === "error" && (
-                            <div className="flex items-center gap-2 text-red-500 bg-red-50 dark:bg-red-900/20 p-4 rounded-xl text-sm">
-                                <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                                <p>Failed to send message. Please try again or email me directly.</p>
-                            </div>
-                        )}
-
-                        <button
-                            disabled={status === "loading"}
-                            className="w-full bg-primary hover:bg-yellow-500 text-gray-900 font-bold py-4 rounded-2xl transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                            type="submit"
-                        >
-                            {status === "loading" ? (
-                                <div className="w-6 h-6 border-2 border-gray-900 border-t-transparent rounded-full animate-spin" />
-                            ) : (
-                                <>
-                                    <span>Send Message</span>
-                                    <Send className="w-5 h-5" />
-                                </>
-                            )}
-                        </button>
-                    </form>
-                )}
+            <div className="flex items-center gap-4 text-gray-700 dark:text-gray-300">
+              <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center text-primary shrink-0">
+                <MapPin className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-gray-500 uppercase tracking-wide">
+                  Based in
+                </p>
+                <p className="text-lg font-bold">Dhaka, Bangladesh</p>
+              </div>
             </div>
-        </section>
-    );
+          </div>
+
+          {/* Social Proof / Links
+          <div className="pt-8 border-t border-gray-200 dark:border-gray-800">
+            <p className="text-sm font-bold text-gray-500 mb-4 uppercase tracking-widest">
+              Follow my work
+            </p>
+            <div className="flex gap-4">
+              {[Github, Linkedin, Twitter].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="w-10 h-10 border border-gray-200 dark:border-gray-700 rounded-full flex items-center justify-center text-gray-500 hover:text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
+          </div> */}
+        </motion.div>
+      </div>
+    </section>
+  );
 }

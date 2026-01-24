@@ -1,43 +1,215 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Github, ExternalLink, Code2, Layers } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
-import { ExternalLink, Layers } from "lucide-react";
 
 export function ProjectsGrid() {
-    const { projects } = portfolioData;
+  const { projects } = portfolioData;
+  const [selectedProject, setSelectedProject] = useState(null);
 
-    // Real images from HTML to simulate the "exact" look
-    const projectImages = [
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuDm-RzuUF-0BKFdXFrIm1pNjUo_u9taHptoqPh1JgzMABryNtn2C4mgWre5wKAOtzyFZXk92IlJ2hWvIF34PtkCTThb7CxmAYY-BhfXovqeHH36DQAwgDnxqMoiUPGk4bJ6c2B3LtvV4I-lS_aEdvg0qKj1Ig5cDsJCdgribEbrPNO85lOqhsW8m5XFc0ZTw_bET67EUxraeEPFtpEwBgrr_7B33WtcblsAlzVTLDa9n_mhgitlgF3ITQE0d_mAJ-7kyd68HVqIDIA",
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBT39Pmx3ul5Z2S5e_ClltWPcL5ZSWTX0EO6O5bjnxvWMJbeIG95hTC9cwj9JVM5-6Xn0ez5Nv5Bimtly19sl-mdhGSRJBYXzzXLE0DUEzZHvw5VFNGXY6vVvLYnM9YhUi3qNLzeCrBSeZa349M2QPd3hGH0g8Q0TxlIXoUSi6psakNqt8R36TSjaolnFEY5MdIXiGvMA19246-bgm7lF55QsrRRT86jI9VM5e32bS84vfzp4si00CvmFt2GIK-fGw_vhOhbp2beIw",
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuCzrYff8tphHh0Z1I9fFsJoqZWtienklyc08khxjx4YiCfvwAzTRCkePZCWTeevYvSNKH6c2nTxmRW-RQtu_ELJup0ebPiIQO5YygmxhWzmK42cX0gkAzFTCsGf8ne2377D53uvMn8d_fH_5uZL35VEzIa_hPYTCdY-TRB2w_sAwtPZLJwOM4elhotqj8uOoz_vGPmjDiHTXRSzKCatspLwi4-P2cZfRMtWT8wHari0G8B0FstEHzju97O52z5tcgMrw-VBcB6IAbA",
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuCbKwQrcT53mXod61fruicZRyjoC44xw_Qr2ZTCycD1-oX7Qf4Au8fbqJr1Kub5CB4BvRHIGC5XE2iWB1fB5VTUAbPqs7AQY-nmtso-YAwupXfkOYZq0zAMGMykB-VLfX-xzqJET4h4I0g25r8ryq-R0JIUmonQ6tkUfOyLTW7hbUrQ9WPL1_jd-UNbv3ZZHImBbPs_mxaSpbwNBHtGioqOsjhSPbW8FaCHESje-pZOX6_ECY-W7NYXXnE-xOjjWQ142wUHkJjgKSo",
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuAxDEpZvn5wtUtsdgAXVVa9Vq6Yfkz3Ly8ALIPyk_Hr4sAg587ieeD4dgKpsCG_0hSOC04NG2CzWocEKt6Wm1VFSnONhqIuRYyxlCyCw6kSfCOX9hXHl20dsQJjjJHDB2fNYC0vHohtBZ_PV04wW9QUhIy7cM1n_Zhc8PzWMgvJLeafJHPUXdE6Vn1IXebqfARKC7ANz1xSEeXTHQKLnBo40ZnvZ6v6pkt1eyjFseCqh_vAsWrOjJB8VspZ4pzyEo9gDlLzZPaKPqM",
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuAYy7nLZ0AdaMNYCdUTFJj9i4tXRFxrVZYnXEo2OTtWhc65jI0FWaNPPb214va8-tgPT0mMSMFU69jucbY5VPNQm8clHdNk4E3yCR4SQdBgBOWDw3hNp6kGfdpCflcsv3T3-Tr-C_Dxb-8_Ap28dqNDBY7MiQhjAWSC_et_44ATFP5GLEE6J-6eP6fJKkNqx3ZPvvZPElqeBJpQ3DH3RDNyi5J1krHOZt3Snuf_d01OfgzFD5VW0BIgTX00B6ysB_uquPc6yT4FThI"
-    ];
+  return (
+    <>
+      {/* --- GRID VIEW --- */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 pb-12">
+        {projects.map((project, index) => (
+          <motion.div
+            key={project.id || index}
+            layoutId={`card-${project.id || index}`}
+            onClick={() => setSelectedProject(project)}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+            className="group relative flex flex-col bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+          >
+            {/* Image Section */}
+            <div className="relative aspect-video overflow-hidden bg-gray-100 dark:bg-gray-900">
+              <img
+                src={project.image || "/api/placeholder/600/400"} // Fallback image if none provided
+                alt={project.title}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              {/* Overlay with Quick Actions */}
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                <span className="flex items-center gap-2 text-white font-medium px-4 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm">
+                  View Details
+                </span>
+              </div>
+            </div>
 
-    return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-12">
-            {projectImages.map((img, index) => (
-                <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="group relative overflow-hidden rounded-3xl bg-gray-100 dark:bg-gray-800 aspect-[4/3] cursor-pointer"
-                >
+            {/* Card Body */}
+            <div className="p-6 flex flex-col gap-3 grow">
+              <div className="flex justify-between items-start">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+                  {project.title}
+                </h3>
+                <Layers className="w-5 h-5 text-gray-400" />
+              </div>
+
+              <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-2">
+                {project.shortDescription || project.description}
+              </p>
+
+              {/* Tech Stack Pills (Limit to 3) */}
+              <div className="flex flex-wrap gap-2 mt-auto pt-2">
+                {project.tech?.slice(0, 3).map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-2.5 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-md"
+                  >
+                    {tech}
+                  </span>
+                ))}
+                {project.tech?.length > 3 && (
+                  <span className="px-2.5 py-1 text-xs font-medium text-gray-400">
+                    + {project.tech.length - 3}
+                  </span>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* --- DETAILS MODAL (The "Page" View) --- */}
+      <AnimatePresence>
+        {selectedProject && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-6">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              onClick={() => setSelectedProject(null)}
+            />
+
+            {/* Modal Content */}
+            <motion.div
+              layoutId={`card-${selectedProject.id || projects.indexOf(selectedProject)}`}
+              className="relative w-full max-w-4xl bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()} // Prevent click from closing modal
+            >
+              {/* Close Button (Sticky) */}
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 text-white rounded-full backdrop-blur-md transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Scrollable Content Area */}
+              <div className="overflow-y-auto custom-scrollbar">
+                {/* Media Section: Video or Image */}
+                <div className="w-full aspect-video bg-black">
+                  {selectedProject.video ? (
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={selectedProject.video}
+                      title={selectedProject.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  ) : (
                     <img
-                        alt={`Project ${index + 1}`}
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100"
-                        src={img}
+                      src={selectedProject.image}
+                      alt={selectedProject.title}
+                      className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <span className="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium">View Project</span>
+                  )}
+                </div>
+
+                {/* Content Body */}
+                <div className="p-8 space-y-8">
+                  {/* Header & Links */}
+                  <div className="flex flex-col md:flex-row gap-6 md:items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-8">
+                    <div>
+                      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                        {selectedProject.title}
+                      </h2>
+                      <p className="text-gray-500 dark:text-gray-400 font-medium">
+                        {selectedProject.category || "Full Stack Application"}
+                      </p>
                     </div>
-                </motion.div>
-            ))}
-        </div>
-    );
+
+                    <div className="flex flex-wrap gap-3">
+                      {selectedProject.frontendRepo && (
+                        <a
+                          href={selectedProject.frontendRepo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-2 px-5 py-2.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white rounded-xl font-medium transition-colors"
+                        >
+                          <Github className="w-4 h-4" />
+                          Client
+                        </a>
+                      )}
+                      {selectedProject.backendRepo && (
+                        <a
+                          href={selectedProject.backendRepo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-2 px-5 py-2.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white rounded-xl font-medium transition-colors"
+                        >
+                          <Github className="w-4 h-4" />
+                          Server
+                        </a>
+                      )}
+                      {selectedProject.live && (
+                        <a
+                          href={selectedProject.live}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 text-white rounded-xl font-medium transition-all shadow-lg shadow-primary/25"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Live Demo
+                        </a>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Project Description */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="md:col-span-2 space-y-4">
+                      <h3 className="text-lg font-bold flex items-center gap-2">
+                        <Code2 className="w-5 h-5 text-primary" />
+                        Project Overview
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+                        {selectedProject.longDescription ||
+                          selectedProject.description}
+                      </p>
+                    </div>
+
+                    {/* Tech Stack Sidebar */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-bold flex items-center gap-2">
+                        <Layers className="w-5 h-5 text-primary" />
+                        Tech Stack
+                      </h3>
+                      <div className="flex flex-wrap content-start gap-2">
+                        {selectedProject.tech?.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-3 py-1.5 text-sm bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-lg"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
+  );
 }
