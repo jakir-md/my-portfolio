@@ -5,9 +5,22 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Github, ExternalLink, Code2, Layers } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
 
+interface IProject {
+  id: number;
+  title: string;
+  category: string;
+  image: string;
+  shortDescription: string;
+  longDescription: string;
+  tech: string[];
+  frontendRepo: string;
+  backendRepo: string;
+  live: string;
+  video: string;
+}
 export function ProjectsGrid() {
   const { projects } = portfolioData;
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProject, setSelectedProject] = useState<null | IProject>(null);
 
   return (
     <>
@@ -49,7 +62,7 @@ export function ProjectsGrid() {
               </div>
 
               <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-2">
-                {project.shortDescription || project.description}
+                {project.shortDescription}
               </p>
 
               {/* Tech Stack Pills (Limit to 3) */}
@@ -181,8 +194,7 @@ export function ProjectsGrid() {
                         Project Overview
                       </h3>
                       <p className="text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">
-                        {selectedProject.longDescription ||
-                          selectedProject.description}
+                        {selectedProject.longDescription}
                       </p>
                     </div>
 
