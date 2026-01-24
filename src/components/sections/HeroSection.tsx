@@ -11,10 +11,7 @@ import {
 } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { opacity: 1, y: 0 },
-};
+const itemVariants = {};
 
 import Image from "next/image";
 export function HeroSection({
@@ -25,8 +22,8 @@ export function HeroSection({
   const { personal } = portfolioData;
 
   const stats = [
-    { label: "Years of Experience", value: "2+" },
-    { label: "Projects Delivered", value: "8+" }, // Count school, hackathon, and work projects
+    { label: "Years of Experience", value: "1+" },
+    { label: "Projects Delivered", value: "3+" }, // Count school, hackathon, and work projects
     { label: "Technologies Mastered", value: "12+" }, // JS, React, Next, Node, SQL, Git, etc.
   ];
 
