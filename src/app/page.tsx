@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <main className="max-w-4xl mx-auto px-6 pt-12 pb-12 selection:bg-primary selection:text-black">
-      <ThemeToggle />
+      {/* <ThemeToggle /> */}
       <HeroSection
         onContactClick={() => setShowContactForm(!showContactForm)}
       />
