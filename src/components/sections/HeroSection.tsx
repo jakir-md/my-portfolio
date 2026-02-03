@@ -99,7 +99,7 @@ export function HeroSection({
           <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto">
             <a
               className="flex items-center justify-center gap-2 bg-primary hover:bg-yellow-500 text-gray-900 font-semibold px-8 py-4 rounded-2xl transition-all shadow-md"
-              href="https://docs.google.com/document/d/1Ha4UwOerjybvtYO4lTFtpOUVOG3m6RPKNimN7e75paI/export?format=pdf"
+              href="https://drive.google.com/file/d/1KnLu3Za3W98QP80ohKJ1i6ULV9vYgPrS/view?usp=drive_link"
             >
               <span>Download CV</span>
               <Download className="w-5 h-5" />
